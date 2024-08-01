@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  serverbsi:
+    name: projects1_projectsinet
+    external: true
+
+services:
+  siakbar:
+    container_name: siakbar
+    image: siproject/siakbar
+    ports:
+      - "80:80"
+    networks:
+      serverbsi:
+        ipv4_address: 192.168.195.18
+  # landingpageschool_db:
+  #   container_name: landingpageschool_db
+  #   image: mariadb:latest
+  #   restart: always
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '2'
+  #         memory: 2G
+  #   environment:
+  #     MARIADB_ROOT_PASSWORD: "mhsmhsmhs"
+  #     MARIADB_USER: "mhs"
+  #     TZ: "Asia/Jakarta"
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   volumes:
+  #     - /home/bsi/projectsi/mhs-mysql:/var/lib/mysql
+  #   networks:
+  #     serverbsi:
+  #       ipv4_address: 192.168.195.16

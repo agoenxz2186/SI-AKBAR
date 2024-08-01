@@ -1,0 +1,35 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: down container docker
+          run: |
+            set +e
+            docker compose down
+            set -e
+    
+        - name: remove container docker 
+          run: |
+            set +e  
+            docker image rm siproject/siakbar
+            set -e
+        
+        - name: build container docker
+          run: |
+            docker build -t siproject/siakbar . 
+
+        - name: up container docker
+          run: |
+            docker compose up -d
+            
+    

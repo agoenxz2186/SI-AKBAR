@@ -8,9 +8,9 @@ $query_builder = true;
 
 $db['default'] = array(
 	'dsn' => '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
+	'hostname' => '192.168.195.5',
+	'username' => 'mhs',
+	'password' => 'mhsmhs',
 	'database' => 'siakbar',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
