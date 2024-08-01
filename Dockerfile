@@ -17,7 +17,7 @@ RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/httpd.conf
 WORKDIR /var/www/html
 COPY . /var/www/html
 
-RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring intl mysql gd
+RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring intl zip gd
 
 
 RUN mkdir -p /var/www/html/application/cache/sessions
