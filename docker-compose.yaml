@@ -9,8 +9,6 @@ services:
   siakbar:
     container_name: siakbar
     image: siproject/siakbar
-    ports:
-      - "80:80"
     networks:
       serverbsi:
         ipv4_address: 192.168.195.18
