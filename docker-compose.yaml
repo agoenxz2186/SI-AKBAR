@@ -8,6 +8,7 @@ networks:
 services:
   siakbar:
     container_name: siakbar
+    restart: always
     image: siproject/siakbar
     networks:
       serverbsi:
