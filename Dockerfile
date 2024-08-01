@@ -6,6 +6,12 @@ RUN apk update && apk add --no-cache \
     apache2-proxy \
     apache2-ssl \
     apache2-utils \
+    oniguruma-dev \
+    icu-dev \
+    libzip-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
     && rm -rf /var/cache/apk/*
 
 # Enable Apache modules
@@ -17,7 +23,8 @@ RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/httpd.conf
 WORKDIR /var/www/html
 COPY . /var/www/html
 
-RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring intl zip gd
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql mysqli mbstring intl zip gd
 
 
 RUN mkdir -p /var/www/html/application/cache/sessions
@@ -26,7 +33,8 @@ RUN chmod 0777 /var/www/html/application/cache/sessions
 EXPOSE 80
 
 # Start Apache
-CMD ["apache2-foreground"]
+CMD ["httpd", "-D", "FOREGROUND"]
+# CMD ["apache2-foreground"]
 
 # FROM agoenxz21/php56 
 
