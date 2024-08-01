@@ -14,8 +14,8 @@ RUN sed -i '/^#LoadModule rewrite_module/s/^#//' /etc/apache2/httpd.conf
 # Configure Apache to use .htaccess
 RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/httpd.conf
 
-RUN mkdir /var/www/html
 WORKDIR /var/www/html
+COPY . /var/www/html
 
 RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring intl mysql gd
 
