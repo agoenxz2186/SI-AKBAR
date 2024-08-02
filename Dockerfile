@@ -64,19 +64,21 @@ RUN apk add php7-simplexml
 RUN cp /usr/bin/php7 /usr/bin/php \
     && rm -f /var/cache/apk/*
 
+	
+RUN sed -i '/^#LoadModule rewrite_module/s/^#//' /etc/apache2/httpd.conf
+RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/httpd.conf
+
 # Add apache to run and configure
 RUN sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apache2/httpd.conf \
     && sed -i "s/#LoadModule\ session_module/LoadModule\ session_module/" /etc/apache2/httpd.conf \
     && sed -i "s/#LoadModule\ session_cookie_module/LoadModule\ session_cookie_module/" /etc/apache2/httpd.conf \
     && sed -i "s/#LoadModule\ session_crypto_module/LoadModule\ session_crypto_module/" /etc/apache2/httpd.conf \
-    && sed -i "s/#LoadModule\ deflate_module/LoadModule\ deflate_module/" /etc/apache2/httpd.conf \
-    && sed -i "s#^DocumentRoot \".*#DocumentRoot \"/app/public\"#g" /etc/apache2/httpd.conf \
-    && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
-    && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
+    && sed -i "s/#LoadModule\ deflate_module/LoadModule\ deflate_module/" /etc/apache2/httpd.conf
+    # && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
+    # && sed -i "s#^DocumentRoot \".*#DocumentRoot \"/app/public\"#g" /etc/apache2/httpd.conf \
+    # && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
 RUN mkdir /app && mkdir /app/public && chown -R apache:apache /app && chmod -R 755 /app && mkdir bootstrap
-ADD start.sh /bootstrap/
-RUN chmod +x /bootstrap/start.sh
   
 WORKDIR /var/www/localhost/htdocs
 RUN rm -rf /var/www/localhost/htdocs/index.html
@@ -105,8 +107,6 @@ CMD ["httpd", "-D", "FOREGROUND"]
 #     && rm -rf /var/cache/apk/*
 
 # # Enable Apache modules
-# RUN sed -i '/^#LoadModule rewrite_module/s/^#//' /etc/apache2/httpd.conf
-
 # # Configure Apache to use .htaccess
 # RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/httpd.conf
 
