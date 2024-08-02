@@ -1,21 +1,8 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-
-    # Protect application and system files from being viewed
-    RewriteCond %{REQUEST_URI} ^/(application|system|private|logs)
-    RewriteRule ^(.*)$ index.php?/$1 [L]
-
-    # Checks to see if the user is attempting to access a valid file,
-    # such as an image or css document, if this isn't true it sends the
-    # request to index.php
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php/$1 [L]
-</IfModule>
-
-<IfModule !mod_rewrite.c>
-    # If we don't have mod_rewrite installed, all 404's
-    # can be sent to index.php, and everything works as normal.
-    ErrorDocument 404 /index.php
+DirectoryIndex index.php
+RewriteEngine on
+RewriteCond $1 !^(index\.php|images|css|js|robots\.txt|favicon\.ico)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ ./index.php/$1 [L,QSA] 
 </IfModule>
