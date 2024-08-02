@@ -66,6 +66,7 @@ RUN cp /usr/bin/php7 /usr/bin/php \
 
 	
 RUN sed -i '/^#LoadModule rewrite_module/s/^#//' /etc/apache2/httpd.conf
+
 RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/httpd.conf
 
 # Add apache to run and configure
