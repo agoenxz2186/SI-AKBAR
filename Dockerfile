@@ -1,7 +1,7 @@
-FROM php7:alpine
+FROM php:7.4-alpine3.14
 
 # Add repos
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.9/community/" >> /etc/apk/repositories
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.14/community/" >> /etc/apk/repositories
 
 # Add basics first
 RUN apk update && apk upgrade && apk add \
