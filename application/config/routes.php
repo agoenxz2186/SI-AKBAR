@@ -4,6 +4,28 @@ defined( 'BASEPATH' ) or exit( 'No direct script access allowed' );
 //home
 $route[ 'default_controller' ] = 'Home';
 $route[ '404_override' ] = '';
+
+$modules_path = APPPATH.'modules/';     
+$modules = scandir($modules_path);
+
+foreach($modules as $module)
+{
+    if($module === '.' || $module === '..') continue;
+    if(is_dir($modules_path) . '/' . $module)
+    {
+        $routes_path = $modules_path . $module . '/config/routes.php';
+        if(file_exists($routes_path))
+        {
+            require($routes_path);
+        }
+        else
+        {
+            continue;
+        }
+    }
+}
+
+
 $route[ 'translate_uri_dashes' ] = false;
 $route[ 'index.js' ] = 'Home';
 $route[ 'sejarah-singkat.js' ] = 'Home/sejarah';
